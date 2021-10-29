@@ -1,0 +1,164 @@
+/**
+ *
+ */
+package labsChallenge;
+
+import java.util.Scanner;
+
+/**
+ * Lab Usage challenge. User is given a menu to select different options that
+ * will print various aspects about an array of lab usage times over a week.
+ *
+ * @author Kevin O'Shea
+ *
+ */
+public class Labs {
+
+	/**
+	 * Menu is printed to user, and their selection is saved by a scanner to an
+	 * integer. Switch statement based on the integer calls different methods for
+	 * each option given in the menu. Menu and switch statement is coded within a
+	 * try/catch to avoid an error occurring from the user input e.g. wrong data
+	 * type. Code is also wrapped in a do/while loop so the menu will repeatedly
+	 * show up, allowing the user to make another selection, until they chose to
+	 * quit, which will then change the while condition to true, thus completing the
+	 * program.
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int userInput;
+		userInput = 0;
+		int[][] labUsage = { { 345, 364, 20 }, { 231, 464, 121 }, { 225, 6, 3 }, { 342, 432, 135 }, { 322, 231, 1 } };
+
+		do {
+			try {
+				// menu printed to user
+				printMenu();
+				// prompt user
+				System.out.println("Please enter an option...");
+				// user input selection saved
+				userInput = scanner.nextInt();
+				// switch statement calls different methods based on user's selection
+				switch (userInput) {
+				case 1:
+					System.out.println("Daily Usage:");
+					dayUsage(labUsage);
+					System.out.println();
+					break;
+				case 2:
+					busiestDay(labUsage);
+					System.out.println();
+					break;
+				case 3:
+					System.out.println("The total usage is: " + totalUsage(labUsage));
+					System.out.println();
+					break;
+				case 4:
+					System.out.println("The average usage per day is: " + averageUsage(labUsage));
+					System.out.println();
+					break;
+				case 5:
+					System.out.println("Goodbye.");
+					break;
+				default:
+					System.out.println("Sorry, invalid selection. Try again...");
+				}
+			} catch (Exception exception) {
+				System.out.println("Error. Restarting...");
+				scanner.nextLine();
+			}
+		} while (userInput != 5);
+
+		scanner.close();
+	}
+
+	/**
+	 * prints menu options to screen
+	 */
+	public static void printMenu() {
+		System.out.println("Menu Options...");
+		System.out.println("1. Show usage for each day");
+		System.out.println("2. Busiest day");
+		System.out.println("3. Total usage for the week");
+		System.out.println("4. Overall averages : per day");
+		System.out.println("5. Quit");
+	}
+
+	/**
+	 * Prints lab usage for each day using nested for loops. Includes array of days
+	 * to print before array columns
+	 *
+	 * @param labUsage - array input to be printed. Must be a 2D integer array.
+	 */
+	public static void dayUsage(int[][] labUsage) {
+		String[] day = { "Mon", "Tue", "Wed", "Thur", "Fri" };
+		for (int row = 0; row < labUsage.length; row++) {
+			System.out.print(day[row] + ":\t");
+			for (int col = 0; col < labUsage[row].length; col++) {
+				System.out.print(labUsage[row][col] + "\t");
+			}
+			System.out.println();
+		}
+	}
+
+	/**
+	 * Uses nested for loop to add up each days total and saves it to a new array
+	 * called dayTotal. Then uses another for loop to check for the busiest day and
+	 * assigns it to a variable to be printed along with the days name.
+	 *
+	 * @param labUsage - array to be used to find the busiest day off. Must be a 2D
+	 *                 integer array
+	 */
+	public static void busiestDay(int[][] labUsage) {
+		int[] dayTotal = { 0, 0, 0, 0, 0 };
+		String[] day = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
+		int busiestDay;
+		String dayName = "";
+		busiestDay = 0;
+		for (int row = 0; row < labUsage.length; row++) {
+			for (int col = 0; col < labUsage[row].length; col++) {
+				dayTotal[row] += (labUsage[row][col]);
+			}
+		}
+		for (int loop = 0; loop < dayTotal.length; loop++) {
+			if (dayTotal[loop] > busiestDay) {
+				busiestDay = dayTotal[loop];
+				dayName = day[loop];
+			}
+		}
+		System.out.println("The busiest day was " + dayName + ": " + busiestDay);
+	}
+
+	/**
+	 * Adds up the values from each row and column and prints them as an integer of
+	 * the total usage
+	 *
+	 * @param labUsage - array to be added up. Must be a 2D integer array.
+	 */
+	public static int totalUsage(int[][] labUsage) {
+		int totalUsage;
+		totalUsage = 0;
+		for (int row = 0; row < labUsage.length; row++) {
+			for (int col = 0; col < labUsage[row].length; col++) {
+				totalUsage += (labUsage[row][col]);
+			}
+		}
+		return totalUsage;
+	}
+
+	/**
+	 * calls the totalUsage method and dividing that by the length of the array. The
+	 * average is printed as a double so the labUsage.length is cast to a double
+	 * value.
+	 *
+	 * @param labUsage - array to be used to find average per day. Must be a 2D
+	 *                 integer array.
+	 */
+	public static double averageUsage(int[][] labUsage) {
+		double avg;
+		avg = (totalUsage(labUsage) / (double) labUsage.length);
+		return avg;
+	}
+}
