@@ -1,0 +1,176 @@
+/**
+ *
+ */
+package penaltyShootOut;
+
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * PENALTY SHOOT OUT CHALLENGE - 21 October 2021
+ *
+ * Java game to simulate a penalty shoot out
+ *
+ * RULES: The keeper (computer) will randomly guess a position in the goal for a
+ * sequence of five penalties. Positions are 1 to 9 inclusive (saved in an
+ * array).
+ *
+ * The user will be prompted in turn for a place to shoot the ball (1 to 9
+ * inclusive).
+ *
+ * If the user's shot matches the position the keeper has preselected for that
+ * penalty then the goal is SAVED, otherwise it's a GOAL.
+ *
+ *
+ * ***ISSUES FACED: Going through a loop of 1 to 5 in the FOR LOOP for each penalty means that when you use the loop variable as an index of the SAVES array the 0 index is skipped.
+ * ***HOW I FIXED: I changed the FOR LOOP range to 0 to <5 and when printing the penalty number chaned 'loop' to (loop+1).
+ *
+ * @author Kevin O'Shea
+ *
+ */
+public class GOAL {
+
+	/**
+	 * Goal visual present to user, and prompted to select a shot location, scanner used to save user selection
+	 * For loop used to iterate through penalties 1 - 5
+	 * Random number generator imported and used to generate 5 random numbers of the goal keepers saves between 1 and 9 and saved to an array
+	 * If statement used to check user selection against loop position in saves array
+	 * Goals scored added up in the IF statement
+	 * Method called with switch statement to print message based on goals scored
+	 * Whole program wrapped in Do/While loop to offer a play again option at the end
+	 * @param args
+	 * @throws InterruptedException - adds delay between printed elements to add some suspense
+	 */
+	public static void main(String[] args) throws InterruptedException {
+		Scanner scanner = new Scanner(System.in);
+		Random rand = new Random();
+
+		int[] saves = new int[5];
+		int userSelection, goalsScored;
+		String yesNo;
+		boolean playAgain = false;
+		goalsScored = 0;
+
+		do {
+			// Start message
+			System.out.println("Game on...");
+
+			// Assign 5 random numbers to array
+			for (int loop = 0; loop<saves.length; loop++) {
+				saves[loop]=rand.nextInt(9)+1;
+			}
+
+//			// ***DELETE THIS***
+//			// Showing random numbers in array for test purposes
+//			for (int loop = 0; loop<saves.length; loop++) {
+//				System.out.println(saves[loop]);
+//			}
+
+			// Loop begins
+			for (int loop = 0; loop < 5; loop++) {
+				System.out.println("Penalty number: " + (loop+1) + " out of 5\n");
+
+				// Goal visual
+				System.out.println("\t-------------------");
+				System.out.println("\t| 1\t 2\t3 |");
+				System.out.println("\t| 4\t 5\t6 |");
+				System.out.println("\t| 7\t 8\t9 |");
+				System.out.println("-------------------------------------");
+				System.out.println("\n\t\tX\t\t\n");
+
+				// User selects shot
+				System.out.println("Select shot...(1-9)");
+				userSelection = scanner.nextInt();
+
+				// Penalty set up output
+				System.out.print("Placing the ball");
+				dotDotDot();
+				TimeUnit.MILLISECONDS.sleep(250);
+				System.out.print("Walking back");
+				dotDotDot();
+				TimeUnit.MILLISECONDS.sleep(250);
+				System.out.print("Run up");
+				dotDotDot();
+				TimeUnit.MILLISECONDS.sleep(250);
+				System.out.println("SHOOT\n");
+
+				// Check if user selection equals the for loop position in the saves array
+				if(userSelection == saves[loop]) {
+					System.out.println("IT'S SAVED!\n");
+				} else {
+					System.out.println("IT'S A GOAL!!!");
+					System.out.println("Keeper went to "+saves[loop]+"\n");
+					goalsScored++;
+				}
+
+			}
+
+			// Print results
+			System.out.println("Goals scored: "+goalsScored+"/5");
+			System.out.println(performanceMesssage(goalsScored));
+			System.out.println();
+
+			// Asks if the user wants to play again
+			System.out.println("Play again? Y/N");
+			yesNo = scanner.next();
+			if (yesNo.equalsIgnoreCase("Y")) {
+				playAgain = true;
+			} else {
+				playAgain = false;
+			}
+
+		} while (playAgain);
+
+		// End message
+		System.out.println("Thanks for playing.");
+		scanner.close();
+	}
+
+	/**
+	 * Prints three dots after a sentence, timed to add suspense
+	 *
+	 * @throws InterruptedException - adds delay between each dot.
+	 */
+	public static void dotDotDot() throws InterruptedException {
+		for (int loop = 0; loop < 3; loop++) {
+			TimeUnit.MILLISECONDS.sleep(250);
+			System.out.print(".");
+		}
+		System.out.println();
+	}
+
+	/**
+	 * This method uses a switch statement to return a different performance message based on the number of goals scored by the user
+	 * @param goalsScored - int input of the number of goals the user scored
+	 * @return - message returned
+	 */
+	public static String performanceMesssage(int goalsScored) {
+		String performanceMessage;
+		switch(goalsScored) {
+		case 0:
+			performanceMessage =  "You have disgraces your country and family.";
+			break;
+		case 1:
+			performanceMessage =  "Did you even try?";
+			break;
+		case 2:
+			performanceMessage =  "Back to training for you!";
+			break;
+		case 3:
+			performanceMessage =  "Try using your good foot!";
+			break;
+		case 4:
+			performanceMessage =  "Not bad - but not perfect";
+			break;
+		case 5:
+			performanceMessage =  "Fluke, and the keeper isn't even that good anyway";
+			break;
+		default:
+			performanceMessage = "I don't know what to say about that one";
+
+		}
+		return performanceMessage;
+	}
+
+}
