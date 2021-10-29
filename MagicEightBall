@@ -1,0 +1,103 @@
+/**
+ *
+ */
+package magiceightball;
+
+/**
+ * This class simulates a magic 8 ball.
+ * The user is prompted to ask a question, then the program
+ * returns an answer based on a random generated number
+ * between 1 and 8. Finally the user is asked if they want to ask
+ * another question, and the program exits if they are done.
+ * @author Kevin O'Shea
+ *
+ */
+
+// import scanner and random generator
+import java.util.Scanner;
+import java.util.Random;
+
+public class MagicEightBall {
+
+	/**
+	 * In this method the scanner and random generator are used to get a user input
+	 * question and then output a random answer based on a generated number and
+	 * switch statement.
+	 * The scanner is then used again to get a yes or no answer to decide whether
+	 * the boolen in the while loop changes and if the program continues or not.
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// set up scanner and random generator
+		Scanner scanner = new Scanner(System.in);
+		Random random = new Random();
+
+		// declare variables
+		String userQuestion, stopAnswer;
+		int randomNumber;
+		boolean stop;
+
+		stop = false;
+
+		while (stop == false) {
+
+			// prompt user to ask question
+			System.out.println("Ask me a question...");
+
+			// assign question to string
+			userQuestion = scanner.nextLine();
+
+			// print user question
+			// System.out.println("You want to know...\n" + userQuestion);
+
+			// generate random number
+			randomNumber = random.nextInt(8);
+
+			// use switch statement to print random answer
+			switch (randomNumber) {
+			case 0:
+				System.out.println("As I see it, yes.");
+				break;
+			case 1:
+				System.out.println("Ask again later.");
+				break;
+			case 2:
+				System.out.println("Better not tell you now.");
+				break;
+			case 3:
+				System.out.println("Cannot predict now.");
+				break;
+			case 4:
+				System.out.println("Concentrate and ask again.");
+				break;
+			case 5:
+				System.out.println("Don't count on it.");
+				break;
+			case 6:
+				System.out.println("It is certain");
+				break;
+			case 7:
+				System.out.println("It is decidedly so.");
+				break;
+			default:
+				System.out.println("Woops, something has gone wrong, ask again.");
+			}
+
+			// ask again
+			System.out.println("Do you want to ask another question? Y/N");
+			stopAnswer = scanner.nextLine();
+
+			if (stopAnswer.equalsIgnoreCase("Y")) {
+				stop = false;
+			} else {
+				stop = true;
+			}
+		}
+
+		System.out.println("Goodbye");
+
+		scanner.close();
+	}
+
+}
