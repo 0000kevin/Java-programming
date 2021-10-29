@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Week 4 challenge involving user input, loops and methods with parameter passing.
  * DRAWING A BOX
- * @author Kevin O'Shea
+ * @author Kevin
  *
  */
 public class SquareMeUp {

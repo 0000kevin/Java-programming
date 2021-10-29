@@ -9,7 +9,7 @@ package magiceightball;
  * returns an answer based on a random generated number
  * between 1 and 8. Finally the user is asked if they want to ask
  * another question, and the program exits if they are done.
- * @author Kevin O'Shea
+ * @author Kevin
  *
  */
 

@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Lab Usage challenge. User is given a menu to select different options that
  * will print various aspects about an array of lab usage times over a week.
  *
- * @author Kevin O'Shea
+ * @author Kevin
  *
  */
 public class Labs {
