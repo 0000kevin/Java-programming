@@ -1,0 +1,198 @@
+/**
+ *
+ */
+package p1;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+/**
+ * Programming Assessment P1 Section B - 09 November 2021
+ *
+ * @author Kevin
+ *
+ */
+public class programmingAssignmentOne {
+
+	/**
+	 * This class contains a Menu-Driven java program that presents a list of
+	 * options to a user, requests their selection and saves it to a variable using
+	 * a scanner, then carries out an action based on their selection by filtering
+	 * through a switch statement. A Do While loop is used to re-print the menu
+	 * until user chooses to quit, and try/catch is used to prevent the program from
+	 * crashing if there's an unexpected input
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// set up scanner
+		Scanner scanner = new Scanner(System.in);
+		// declaring variables and initialising values array
+		int[] values = { 92, 106, 113, 113, 37, 105, 116, 115, 106, 37, 126, 116, 122, 37, 104, 119, 102, 104, 112, 106,
+				105, 37, 110, 121 };
+		int userSelection;
+		userSelection = 0;
+		do {
+			try {
+				printMenu();
+				// initialising the user selection
+				userSelection = scanner.nextInt();
+
+				// Switch statement method chooses menu option based on user input and calls a
+				// method
+				// to carry out instruction
+				switchStatement(userSelection, values);
+
+			} catch (Exception exception) {
+				// try catch used to prevent the program from crashing if an unexpected input is
+				// entered (e.g. a char instead of an int)
+				System.out.println("Invalid input, try that again...");
+				scanner.nextLine();
+			}
+		} while (userSelection != 6);
+		System.out.println("Goodbye");
+		// close resource
+		scanner.close();
+	}
+
+	/**
+	 * This method finds the ASCII message in the values. A for loop is used to go
+	 * through each value which is then decremented by 5 and then to a char when
+	 * bring printed
+	 *
+	 * @param values - array of ints must be used
+	 */
+	public static void codeCracker(int[] values) {
+		for (int value : values) {
+			value -= 5;
+			System.out.print((char) value);
+		}
+		System.out.println();
+	}
+
+	/**
+	 * This method prints the values that are multiples of either 3 or 7 A for loop
+	 * is used to filter through each value An IF statement is used to check if the
+	 * value is a multiple of 3 or 7 and prints the value if it is
+	 *
+	 * @param values - array of ints must be used
+	 */
+	public static void multiples3And7(int[] values) {
+//		Original code used for this method, but wanted to try a way to not have the final comma printed.
+//
+//		for (int value : values) {
+//			if (value % 3 == 0 || value % 7 == 0) {
+//				System.out.print(value + ", "); TODO: remove comma from after last value printed!
+//			}
+//		}
+//		System.out.println();
+
+		// code used to not print the final comma seems very long winded so could
+		// probably be improved upon.
+		String multiples;
+		multiples = "";
+		for (int value : values) {
+			if (value % 3 == 0 || value % 7 == 0) {
+				multiples += (value + " ");
+			}
+		}
+
+		for (int loop = 0; loop < multiples.split(" ").length; loop++) { // string converted into a method based on
+																			// spaces
+			System.out.print(multiples.split(" ")[loop]);
+			if (loop < (multiples.split(" ").length - 1)) {
+				System.out.print(", ");
+			}
+		}
+		System.out.println();
+	}
+
+	/**
+	 * This method returns the average value of an array of ints Uses a for loop to
+	 * find the total value, then divides by the length to give the average
+	 *
+	 * @param values - array of ints must be used
+	 * @return - average value returned as a double
+	 */
+	public static double averageValue(int[] values) {
+		int total;
+		double avg;
+		total = 0;
+		for (int value : values) {
+			total += value;
+		}
+		// total cast as a double to get accurate result
+		avg = (double) total / values.length;
+		return avg;
+	}
+
+	/**
+	 * This method uses a for loop to find the minimum value of the array
+	 *
+	 * @param values - array of ints must be used
+	 * @return - minimum value returned as an int
+	 */
+	public static int minimumValue(int[] values) {
+		int min;
+		min = values[0];
+		for (int value : values) {
+			if (value < min) {
+				min = value;
+			}
+		}
+		return min;
+	}
+
+	/**
+	 * This method contains a switch statement based on the user selection variable
+	 * It carries out an operation or calls a method to do so in each case
+	 *
+	 * @param userSelection - an int variable from the user input
+	 * @param values        - an array of ints
+	 */
+	public static void switchStatement(int userSelection, int[] values) {
+		switch (userSelection) {
+		case 1:
+			System.out.println("All values:");
+			System.out.println(Arrays.toString(values));
+			break;
+		case 2:
+			System.out.println("Minimum value:");
+			System.out.println(minimumValue(values));
+			break;
+		case 3:
+			System.out.println("Average (two decimal places):");
+			System.out.printf("%.2f \n", averageValue(values));
+			break;
+		case 4:
+			System.out.println("Numbers that are multiples of 3 or 7:");
+			multiples3And7(values);
+			break;
+		case 5:
+			System.out.println("Crack the code:");
+			codeCracker(values);
+			break;
+		case 6:
+			System.out.println("Quitting...");
+			break;
+		default:
+			System.out.println("Error, try again...");
+		}
+	}
+
+	/**
+	 * This method prints the menu options to screen and prompts the user to enter a
+	 * number
+	 */
+	public static void printMenu() {
+		System.out.println("Menu..........");
+		System.out.println("1. Show all values");
+		System.out.println("2. Show minimum value");
+		System.out.println("3. Show average (two decimal places)");
+		System.out.println("4. Show all numbers that are multiples of 3 or 7");
+		System.out.println("5. Crack the code");
+		System.out.println("6. Quit");
+		System.out.println("Enter a number and return");
+	}
+
+}
