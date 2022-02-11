@@ -27,17 +27,6 @@ public class FizzBuzz {
 			System.out.println(test.isEmpty() ? loop : test);
 		}
 		
-//		for(int loop = 1; loop<=100; loop++) {
-//			if(loop%15==0) {
-//				System.out.println("FizzBuzz");
-//			} else if(loop%3==0) {
-//				System.out.println("Fizz");
-//			} else if(loop%5==0) {
-//				System.out.println("Buzz");
-//			} else if(loop%3!=0 && loop%5!=0) {
-//				System.out.println(loop);
-//			} 
-//		}
 	}
 
 }
